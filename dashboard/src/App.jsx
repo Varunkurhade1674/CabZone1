@@ -159,7 +159,7 @@ function OwnerDashboard() {
             </button>
             <div className="flex items-center gap-3">
               <img 
-                src="/images/logocar.png" 
+                src="/images/logo.png" 
                 alt="CabZone Logo" 
                 className="h-10 w-auto filter brightness-0 invert drop-shadow-lg"
               />

@@ -168,12 +168,12 @@ body {
 .logo-img {
     height: 50px;
     width: auto;
-    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
     transition: all 0.3s ease;
 }
 
 .logo:hover .logo-img {
-    filter: brightness(0) invert(1) drop-shadow(0 4px 15px rgba(247, 37, 133, 0.9));
+    filter: drop-shadow(0 4px 15px rgba(247, 37, 133, 0.6));
     transform: scale(1.08);
 }
 
