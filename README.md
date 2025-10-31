@@ -9,6 +9,34 @@ A complete cab fleet management solution combining a modern marketing landing pa
 1. **Open Landing Page**: Simply open `index.html` in your browser
 2. **Access Dashboard**: Click the "Login" button or navigate to `dashboard/dist/index.html`
 
+### Which file opens / How the site starts
+
+- Static landing site (root): the browser opens `index.html` in the repository root. You can open it by double-clicking the file or from PowerShell:
+
+```powershell
+Start-Process .\index.html
+```
+
+- React dashboard (development): Vite serves `dashboard/index.html`, which mounts the React app at `<div id="root">` and loads `/src/main.jsx`.
+
+    - To run the dashboard in development (PowerShell):
+
+    ```powershell
+    cd dashboard
+    npm install
+    npm run dev
+    ```
+
+    - To build and preview the production bundle:
+
+    ```powershell
+    cd dashboard
+    npm run build
+    npm run preview
+    # or open the built file directly:
+    Start-Process .\dashboard\dist\index.html
+    ```
+
 ### Demo Credentials
 
 **Owner Dashboard:**

@@ -25,7 +25,10 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('cabdoc_user');
-    window.location.href = '/login';
+    // Use hash navigation so the HashRouter in the React app handles the route
+    // Redirect to the React landing page ('#/') instead of forcing a full page
+    // navigation to a server path which can lead to the static HTML page.
+    window.location.hash = '#/';
   };
 
   return (

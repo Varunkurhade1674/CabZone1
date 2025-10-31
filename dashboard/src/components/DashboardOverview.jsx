@@ -85,7 +85,7 @@ const DashboardOverview = () => {
   return (
     <div className="space-y-6">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
@@ -111,10 +111,10 @@ const DashboardOverview = () => {
             </motion.div>
           );
         })}
-      </div>
+      </div> */}
 
       {/* Earnings Snapshot */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
@@ -135,7 +135,7 @@ const DashboardOverview = () => {
             );
           })}
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Notifications and Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -184,11 +184,8 @@ const DashboardOverview = () => {
           <h2 className="text-xl font-bold mb-6">Recent Activity</h2>
           <div className="space-y-4 max-h-96 overflow-y-auto">
             {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                  <Users size={20} />
-                </div>
-                <div className="flex-1">
+              <div key={index} className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                <div>
                   <p className="font-semibold">{activity.driver}</p>
                   <p className="text-sm text-gray-400">{activity.action}</p>
                   <p className="text-xs text-gray-500">{activity.vehicle} • {activity.time}</p>

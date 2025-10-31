@@ -15,7 +15,7 @@ const Login = () => {
   // Demo credentials for testing
   const demoCredentials = {
     owner: { username: 'owner', password: 'owner123', role: 'owner', name: 'John Doe' },
-    driver: { username: 'driver', password: 'driver123', role: 'driver', name: 'Rajesh Kumar' }
+    // driver: { username: 'driver', password: 'driver123', role: 'driver', name: 'Rajesh Kumar' }
   };
 
   const handleSubmit = async (e) => {
@@ -36,18 +36,18 @@ const Login = () => {
         };
         login(userData);
         navigate('/owner');
-      } else if (username === demoCredentials.driver.username && password === demoCredentials.driver.password) {
-        const userData = {
-          id: '2',
-          username: demoCredentials.driver.username,
-          name: demoCredentials.driver.name,
-          role: 'driver',
-          fleet_id: 'fleet_001',
-          driver_id: 'driver_456',
-          vehicle: 'MH-01-AB-1234'
-        };
-        login(userData);
-        navigate('/driver');
+      // } else if (username === demoCredentials.driver.username && password === demoCredentials.driver.password) {
+      //   const userData = {
+      //     id: '2',
+      //     username: demoCredentials.driver.username,
+      //     name: demoCredentials.driver.name,
+      //     role: 'driver',
+      //     fleet_id: 'fleet_001',
+      //     driver_id: 'driver_456',
+      //     vehicle: 'MH-01-AB-1234'
+      //   };
+      //   login(userData);
+      //   navigate('/driver');
       } else {
         setError('Invalid username or password');
       }
@@ -75,9 +75,13 @@ const Login = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring' }}
-            className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse-glow"
+            className="w-64 h-40 flex items-center justify-center mx-auto mb-6"
           >
-            <Car size={40} className="text-white" />
+            <img 
+              src="/images/Loginlogo.png" 
+              alt="CabZone Logo" 
+              className="w-full h-full object-contain drop-shadow-2xl"
+            />
           </motion.div>
           <h1 className="text-4xl font-bold gradient-text mb-2">CabZone</h1>
           <p className="text-gray-400">Digital Fleet Document Manager</p>
@@ -152,10 +156,10 @@ const Login = () => {
               <span className="font-medium">Owner:</span>
               <span className="text-gray-400">owner / owner123</span>
             </div>
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <span className="font-medium">Driver:</span>
               <span className="text-gray-400">driver / driver123</span>
-            </div>
+            </div> */}
           </div>
         </div>
 

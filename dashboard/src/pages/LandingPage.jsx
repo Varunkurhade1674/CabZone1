@@ -8,6 +8,7 @@ import PricingSection from '../components/landing/PricingSection';
 import FAQSection from '../components/landing/FAQSection';
 import ContactSection from '../components/landing/ContactSection';
 import StatisticsSection from '../components/landing/StatisticsSection';
+import Footer from '../components/landing/Footer';
 import LandingNavbar from '../components/landing/LandingNavbar';
 import '../styles/landing.css';
 
@@ -47,6 +48,7 @@ const LandingPage = () => {
       <FAQSection />
       <ContactSection />
       <StatisticsSection />
+      <Footer />
     </div>
   );
 };

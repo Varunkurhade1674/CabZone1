@@ -26,7 +26,8 @@ const DriverManagement = ({ addToast }) => {
       phone: '+91 98765 43210',
       joinDate: '2023-01-15',
       rating: 4.8,
-      trips: 1250
+      trips: 1250,
+      licenseExpiry: '2026-03-15'
     },
     {
       id: 2,
@@ -38,7 +39,8 @@ const DriverManagement = ({ addToast }) => {
       phone: '+91 98765 43211',
       joinDate: '2023-03-20',
       rating: 4.6,
-      trips: 980
+      trips: 980,
+      licenseExpiry: '2025-12-20'
     },
     {
       id: 3,
@@ -50,7 +52,8 @@ const DriverManagement = ({ addToast }) => {
       phone: '+91 98765 43212',
       joinDate: '2023-02-10',
       rating: 4.2,
-      trips: 750
+      trips: 750,
+      licenseExpiry: '2025-11-10'
     }
   ];
 
@@ -115,9 +118,10 @@ const DriverManagement = ({ addToast }) => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Driver</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">License No.</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> */}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Verification</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry</th>
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th> */}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -137,13 +141,13 @@ const DriverManagement = ({ addToast }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{driver.vehicle}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{driver.licenseNo}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                {/* <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                     driver.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                   }`}>
                     {driver.status}
                   </span>
-                </td>
+                </td> */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   {driver.verification === 'Verified' ? (
                     <span className="flex items-center text-green-600">
@@ -163,12 +167,15 @@ const DriverManagement = ({ addToast }) => {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="text-sm text-gray-900">{driver.licenseExpiry}</span>
+                </td>
+                {/* <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <span className="text-sm font-medium mr-2">{driver.rating}</span>
                     <Sparkles size={16} className="text-yellow-500" />
                     <span className="text-xs text-gray-500 ml-2">({driver.trips} trips)</span>
                   </div>
-                </td>
+                </td> */}
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-2">
                     <button 
@@ -260,14 +267,14 @@ const DriverManagement = ({ addToast }) => {
                     <p className="text-sm text-gray-500">Join Date</p>
                     <p className="font-medium">{selectedDriver.joinDate}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className="text-sm text-gray-500">Status</p>
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                       selectedDriver.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                     }`}>
                       {selectedDriver.status}
                     </span>
-                  </div>
+                  </div> */}
                   <div>
                     <p className="text-sm text-gray-500">Verification</p>
                     {selectedDriver.verification === 'Verified' ? (
@@ -297,7 +304,7 @@ const DriverManagement = ({ addToast }) => {
                 <p><span className="text-gray-500">Vehicle Number:</span> {selectedDriver.vehicle}</p>
                 <p><span className="text-gray-500">License Number:</span> {selectedDriver.licenseNo}</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
+              {/* <div className="bg-gray-50 p-4 rounded-lg">
                 <h4 className="font-bold mb-2">Performance</h4>
                 <div className="flex items-center mb-2">
                   <span className="text-lg font-medium mr-2">{selectedDriver.rating}</span>
@@ -305,7 +312,7 @@ const DriverManagement = ({ addToast }) => {
                   <span className="text-sm text-gray-500 ml-2">Rating</span>
                 </div>
                 <p><span className="text-gray-500">Total Trips:</span> {selectedDriver.trips}</p>
-              </div>
+              </div> */}
             </div>
             
             <div className="flex justify-end space-x-3">

@@ -20,7 +20,7 @@ import SettingsPanel from './components/SettingsPanel';
 import QuickActions from './components/QuickActions';
 import AIAssistant from './components/AIAssistant';
 import ToastContainer from './components/Toast';
-import DriverDashboard from './components/driver/DriverDashboard';
+// import DriverDashboard from './components/driver/DriverDashboard';
 
 import {
   LayoutDashboard,
@@ -85,8 +85,10 @@ function OwnerDashboard() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const handleLogout = () => {
+    // Call logout which will clear auth and set hash to '#/' (React landing)
     logout();
-    navigate('/login');
+    // Ensure client-side navigation lands on the React landing route
+    navigate('/');
   };
 
   const addToast = (message, type = 'success') => {
@@ -100,14 +102,14 @@ function OwnerDashboard() {
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'tracking', label: 'Live Tracking', icon: MapPin },
+    // { id: 'tracking', label: 'Live Tracking', icon: MapPin },
     { id: 'drivers', label: 'Drivers', icon: Users },
-    { id: 'vehicles', label: 'Vehicles', icon: Car },
-    { id: 'leaderboard', label: 'Leaderboard', icon: Trophy },
+    // { id: 'vehicles', label: 'Vehicles', icon: Car },
+    // { id: 'leaderboard', label: 'Leaderboard', icon: Trophy },
     { id: 'documents', label: 'Document Vault', icon: FolderLock },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
-    { id: 'expenses', label: 'Expenses', icon: Wallet },
-    { id: 'communication', label: 'Communication', icon: MessageSquare },
+    // { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    // { id: 'expenses', label: 'Expenses', icon: Wallet },
+    // { id: 'communication', label: 'Communication', icon: MessageSquare },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
@@ -115,22 +117,22 @@ function OwnerDashboard() {
     switch (activeTab) {
       case 'dashboard':
         return <DashboardOverview />;
-      case 'tracking':
-        return <LiveTracking />;
+      // case 'tracking':
+      //   return <LiveTracking />;
       case 'drivers':
         return <DriverManagement />;
-      case 'vehicles':
-        return <VehicleManagement />;
-      case 'leaderboard':
-        return <Leaderboard />;
+      // case 'vehicles':
+      //   return <VehicleManagement />;
+      // case 'leaderboard':
+      //   return <Leaderboard />;
       case 'documents':
         return <DocumentVault />;
-      case 'analytics':
-        return <Analytics />;
-      case 'expenses':
-        return <ExpenseTracker />;
-      case 'communication':
-        return <CommunicationHub />;
+      // case 'analytics':
+      //   return <Analytics />;
+      // case 'expenses':
+      //   return <ExpenseTracker />;
+      // case 'communication':
+      //   return <CommunicationHub />;
       case 'settings':
         return <SettingsPanel />;
       default:
@@ -161,11 +163,11 @@ function OwnerDashboard() {
               <img 
                 src="/images/logo.png" 
                 alt="CabZone Logo" 
-                className="h-10 w-auto filter brightness-0 invert drop-shadow-lg"
+                className="h-12 w-auto filter brightness-0 invert drop-shadow-lg"
               />
-              <div>
-                <h1 className="text-xl font-bold gradient-text">CabZone</h1>
-                <p className="text-xs text-emerald-400/70">Fleet Management</p>
+              <div className="flex flex-col justify-center">
+                <h1 className="text-xl font-bold gradient-text leading-tight">CabZone</h1>
+                <p className="text-xs text-emerald-400/70 leading-tight">Fleet Management</p>
               </div>
             </div>
           </div>
@@ -196,7 +198,6 @@ function OwnerDashboard() {
             
             <button 
               onClick={() => {
-                addToast(`You have ${notificationCount} new notifications`, 'info');
                 setNotificationCount(0);
               }}
               className="glass-button p-2 relative"
@@ -213,7 +214,6 @@ function OwnerDashboard() {
             <button 
               onClick={() => {
                 setShowAI(!showAI);
-                if (!showAI) addToast('AI Assistant activated', 'success');
               }}
               className="glass-button px-4 py-2 flex items-center gap-2 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 hover:from-emerald-500/30 hover:to-cyan-500/30"
             >
@@ -242,7 +242,6 @@ function OwnerDashboard() {
                   <button
                     onClick={() => {
                       setShowProfileMenu(false);
-                      addToast('Profile settings coming soon!', 'info');
                     }}
                     className="w-full text-left px-4 py-2 hover:bg-white/10 rounded-lg transition-colors flex items-center gap-2"
                   >
@@ -340,14 +339,18 @@ function App() {
         />
         
         {/* Driver Dashboard */}
-        <Route
-          path="/driver/*"
-          element={
-            <ProtectedRoute allowedRoles={['driver']}>
-              <DriverDashboard />
-            </ProtectedRoute>
-          }
-        />
+        {/**
+         * Driver Dashboard (commented out as requested)
+         *
+         * <Route
+         *   path="/driver/*"
+         *   element={
+         *     <ProtectedRoute allowedRoles={['driver']}>
+         *       <DriverDashboard />
+         *     </ProtectedRoute>
+         *   }
+         * />
+         */}
         
         {/* Unauthorized */}
         <Route
