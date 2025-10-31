@@ -256,7 +256,7 @@ const DriverDashboard = () => {
         </div>
       </motion.div>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - Commented out as per request
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -295,6 +295,7 @@ const DriverDashboard = () => {
           </button>
         </div>
       </motion.div>
+      */}
     </div>
   );
 

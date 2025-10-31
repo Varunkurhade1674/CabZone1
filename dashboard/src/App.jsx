@@ -17,7 +17,6 @@ import Analytics from './components/Analytics';
 import ExpenseTracker from './components/ExpenseTracker';
 import CommunicationHub from './components/CommunicationHub';
 import SettingsPanel from './components/SettingsPanel';
-import QuickActions from './components/QuickActions';
 import AIAssistant from './components/AIAssistant';
 import ToastContainer from './components/Toast';
 // import DriverDashboard from './components/driver/DriverDashboard';
@@ -85,10 +84,10 @@ function OwnerDashboard() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const handleLogout = () => {
-    // Call logout which will clear auth and set hash to '#/' (React landing)
+    // Clear authentication
     logout();
-    // Ensure client-side navigation lands on the React landing route
-    navigate('/');
+    // Redirect to the React landing page
+    window.location.href = '/dashboard/index.html';
   };
 
   const addToast = (message, type = 'success') => {
@@ -303,7 +302,6 @@ function OwnerDashboard() {
 
         {/* Main Content */}
         <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-0 lg:ml-0' : 'ml-0'}`}>
-          <QuickActions addToast={addToast} />
           {renderContent()}
         </main>
       </div>

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Search, Filter, Upload, CheckCircle, XCircle, AlertTriangle, Mail, Eye, Edit, Trash2, Sparkles } from 'lucide-react';
+import { Search, Filter, Upload, CheckCircle, XCircle, AlertTriangle, Mail, Eye, Edit, Trash2, Sparkles, UserPlus, Car } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Modal from './Modal';
+import AddDriverForm from './AddDriverForm';
+import AddVehicleForm from './AddVehicleForm';
 
 const DriverManagement = ({ addToast }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,6 +12,9 @@ const DriverManagement = ({ addToast }) => {
   const [showDriverDetails, setShowDriverDetails] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [messageContent, setMessageContent] = useState('');
+  const [showDriverModal, setShowDriverModal] = useState(false);
+  const [showVehicleModal, setShowVehicleModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   
   const handleShowDriverDetails = (driver) => {
     setSelectedDriver(driver);
@@ -76,14 +82,82 @@ const DriverManagement = ({ addToast }) => {
     setShowMessageModal(false);
   };
 
+  const handleAddDriver = (formData) => {
+    console.log('Adding driver:', formData);
+    setShowDriverModal(false);
+    if (addToast) addToast(`Driver ${formData.name} added successfully!`, 'success');
+  };
+
+  const handleAddVehicle = (formData) => {
+    console.log('Adding vehicle:', formData);
+    setShowVehicleModal(false);
+    if (addToast) addToast(`Vehicle ${formData.vehicleId} added successfully!`, 'success');
+  };
+
+  const actions = [
+    { 
+      icon: UserPlus, 
+      label: 'Add Driver', 
+      color: 'from-emerald-500 to-green-500',
+      onClick: () => setShowDriverModal(true)
+    },
+    { 
+      icon: Car, 
+      label: 'Add Vehicle', 
+      color: 'from-cyan-500 to-blue-500',
+      onClick: () => setShowVehicleModal(true)
+    },
+    { 
+      icon: Upload, 
+      label: 'Upload Doc', 
+      color: 'from-teal-500 to-emerald-500',
+      onClick: () => setShowUploadModal(true)
+    },
+    { 
+      icon: Search, 
+      label: 'Search', 
+      color: 'from-sky-500 to-cyan-500',
+      onClick: () => {
+        if (addToast) addToast('Search feature activated', 'info');
+      }
+    },
+  ];
+
   return (
-    <div className="p-6">
+    <div className="space-y-6">
+      {/* Quick Actions */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card p-4 mb-6"
+      >
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-emerald-400">Quick Actions</h3>
+          <div className="flex gap-2">
+            {actions.map((action, index) => {
+              const Icon = action.icon;
+              return (
+                <motion.button
+                  key={action.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={action.onClick}
+                  className={`glass-button px-4 py-2 flex items-center gap-2 bg-gradient-to-r ${action.color}/20 hover:${action.color}/30 border border-${action.color.split(' ')[1]}/30`}
+                  title={action.label}
+                >
+                  <Icon size={18} />
+                  <span className="hidden sm:inline text-sm">{action.label}</span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </div>
+      </motion.div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Driver Management</h1>
-        <button className="btn-primary flex items-center gap-2">
-          <Upload size={16} />
-          Add New Driver
-        </button>
       </div>
       
       <div className="flex gap-4 mb-6">

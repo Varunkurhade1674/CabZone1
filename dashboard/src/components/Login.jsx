@@ -15,7 +15,7 @@ const Login = () => {
   // Demo credentials for testing
   const demoCredentials = {
     owner: { username: 'owner', password: 'owner123', role: 'owner', name: 'John Doe' },
-    // driver: { username: 'driver', password: 'driver123', role: 'driver', name: 'Rajesh Kumar' }
+    driver: { username: 'driver', password: 'driver123', role: 'driver', name: 'Rajesh Kumar' }
   };
 
   const handleSubmit = async (e) => {
@@ -36,18 +36,18 @@ const Login = () => {
         };
         login(userData);
         navigate('/owner');
-      // } else if (username === demoCredentials.driver.username && password === demoCredentials.driver.password) {
-      //   const userData = {
-      //     id: '2',
-      //     username: demoCredentials.driver.username,
-      //     name: demoCredentials.driver.name,
-      //     role: 'driver',
-      //     fleet_id: 'fleet_001',
-      //     driver_id: 'driver_456',
-      //     vehicle: 'MH-01-AB-1234'
-      //   };
-      //   login(userData);
-      //   navigate('/driver');
+      } else if (username === demoCredentials.driver.username && password === demoCredentials.driver.password) {
+        const userData = {
+          id: '2',
+          username: demoCredentials.driver.username,
+          name: demoCredentials.driver.name,
+          role: 'driver',
+          fleet_id: 'fleet_001',
+          driver_id: 'driver_456',
+          vehicle: 'MH-01-AB-1234'
+        };
+        login(userData);
+        navigate('/driver');
       } else {
         setError('Invalid username or password');
       }
