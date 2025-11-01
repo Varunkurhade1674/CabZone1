@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, Upload, CheckCircle, XCircle, AlertTriangle, Mail, Eye, Edit, Trash2, Sparkles, UserPlus, Car } from 'lucide-react';
+import { Search, Filter, CheckCircle, XCircle, AlertTriangle, Mail, Eye, Edit, Trash2, Sparkles, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Modal from './Modal';
 import AddDriverForm from './AddDriverForm';
@@ -10,11 +10,9 @@ const DriverManagement = ({ addToast }) => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [showDriverDetails, setShowDriverDetails] = useState(false);
+  const [showAddDriverModal, setShowAddDriverModal] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [messageContent, setMessageContent] = useState('');
-  const [showDriverModal, setShowDriverModal] = useState(false);
-  const [showVehicleModal, setShowVehicleModal] = useState(false);
-  const [showUploadModal, setShowUploadModal] = useState(false);
   
   const handleShowDriverDetails = (driver) => {
     setSelectedDriver(driver);
@@ -82,108 +80,64 @@ const DriverManagement = ({ addToast }) => {
     setShowMessageModal(false);
   };
 
+
   const handleAddDriver = (formData) => {
     console.log('Adding driver:', formData);
-    setShowDriverModal(false);
+    setShowAddDriverModal(false);
     if (addToast) addToast(`Driver ${formData.name} added successfully!`, 'success');
   };
 
-  const handleAddVehicle = (formData) => {
-    console.log('Adding vehicle:', formData);
-    setShowVehicleModal(false);
-    if (addToast) addToast(`Vehicle ${formData.vehicleId} added successfully!`, 'success');
-  };
-
-  const actions = [
-    { 
-      icon: UserPlus, 
-      label: 'Add Driver', 
-      color: 'from-emerald-500 to-green-500',
-      onClick: () => setShowDriverModal(true)
-    },
-    { 
-      icon: Car, 
-      label: 'Add Vehicle', 
-      color: 'from-cyan-500 to-blue-500',
-      onClick: () => setShowVehicleModal(true)
-    },
-    { 
-      icon: Upload, 
-      label: 'Upload Doc', 
-      color: 'from-teal-500 to-emerald-500',
-      onClick: () => setShowUploadModal(true)
-    },
-    { 
-      icon: Search, 
-      label: 'Search', 
-      color: 'from-sky-500 to-cyan-500',
-      onClick: () => {
-        if (addToast) addToast('Search feature activated', 'info');
-      }
-    },
-  ];
-
   return (
-    <div className="space-y-6">
-      {/* Quick Actions */}
-      <motion.div
+    <div className="flex flex-col min-h-[calc(100vh-8rem)] justify-start pt-8 pb-12">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-card p-4 mb-6"
+        className="glass-card p-6"
       >
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-emerald-400">Quick Actions</h3>
-          <div className="flex gap-2">
-            {actions.map((action, index) => {
-              const Icon = action.icon;
-              return (
-                <motion.button
-                  key={action.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={action.onClick}
-                  className={`glass-button px-4 py-2 flex items-center gap-2 bg-gradient-to-r ${action.color}/20 hover:${action.color}/30 border border-${action.color.split(' ')[1]}/30`}
-                  title={action.label}
-                >
-                  <Icon size={18} />
-                  <span className="hidden sm:inline text-sm">{action.label}</span>
-                </motion.button>
-              );
-            })}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold gradient-text mb-2">Driver Management</h1>
+            <p className="text-gray-400">Manage and monitor your fleet drivers and their details</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowAddDriverModal(true)}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              <UserPlus className="h-5 w-5 mr-2" />
+              Add New Driver
+            </button>
+          </div>
+        </div>
+      
+        <div className="mt-6 pt-6 border-t border-gray-700/50">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <input
+                type="text"
+                placeholder="Search by name or vehicle number..."
+                className="glass-input w-full pl-10"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <select
+                className="glass-input pl-10 pr-8"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <option value="all">All Drivers</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
           </div>
         </div>
       </motion.div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Driver Management</h1>
-      </div>
-      
-      <div className="flex gap-4 mb-6">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          <input
-            type="text"
-            placeholder="Search by name or vehicle number..."
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <div className="relative">
-          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          <select
-            className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white"
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-          >
-            <option value="all">All Drivers</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-      </div>
       
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
@@ -192,11 +146,8 @@ const DriverManagement = ({ addToast }) => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Driver</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">License No.</th>
-              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> */}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Verification</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry</th>
-              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th> */}
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -215,13 +166,6 @@ const DriverManagement = ({ addToast }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{driver.vehicle}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{driver.licenseNo}</td>
-                {/* <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    driver.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                  }`}>
-                    {driver.status}
-                  </span>
-                </td> */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   {driver.verification === 'Verified' ? (
                     <span className="flex items-center text-green-600">
@@ -281,6 +225,23 @@ const DriverManagement = ({ addToast }) => {
         </table>
       </div>
       
+      {/* Add Driver Modal */}
+      {showAddDriverModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-lg p-6 w-full max-w-2xl"
+          >
+            <h2 className="text-xl font-bold mb-6">Add New Driver</h2>
+            <AddDriverForm 
+              onSubmit={handleAddDriver} 
+              onCancel={() => setShowAddDriverModal(false)} 
+            />
+          </motion.div>
+        </div>
+      )}
+
       {/* Message Modal */}
       {showMessageModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -392,7 +353,7 @@ const DriverManagement = ({ addToast }) => {
             <div className="flex justify-end space-x-3">
               <button
                 onClick={() => {
-                  setSelectedDriver(driver);
+                  setSelectedDriver(selectedDriver);
                   setShowDriverDetails(false);
                 }}
                 className="glass-button flex items-center gap-2"
@@ -410,6 +371,7 @@ const DriverManagement = ({ addToast }) => {
           </motion.div>
         </div>
       )}
+      </div>
     </div>
   );
 };

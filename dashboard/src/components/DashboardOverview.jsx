@@ -1,5 +1,5 @@
 import React from 'react';
-import { Car, Users, FileText, Upload, TrendingUp, AlertCircle, DollarSign, Calendar } from 'lucide-react';
+import { Car, Users, FileText, Upload, TrendingUp, AlertCircle, DollarSign, Calendar, Activity, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const DashboardOverview = () => {
@@ -9,39 +9,41 @@ const DashboardOverview = () => {
       value: '48', 
       change: '+12%', 
       icon: Car, 
-      color: 'from-blue-500 to-cyan-500',
-      trend: 'up'
+      color: 'from-slate-700 to-slate-600',
+      trend: 'up',
+      bg: 'bg-slate-700/50',
+      border: 'border-slate-600/50'
     },
     { 
       label: 'Total Drivers', 
       value: '52', 
       change: '+8%', 
       icon: Users, 
-      color: 'from-purple-500 to-pink-500',
-      trend: 'up'
+      color: 'from-blue-700 to-blue-600',
+      trend: 'up',
+      bg: 'bg-blue-700/30',
+      border: 'border-blue-600/30'
     },
     { 
       label: 'Pending Documents', 
       value: '7', 
       change: '-3', 
       icon: FileText, 
-      color: 'from-orange-500 to-red-500',
-      trend: 'down'
+      color: 'from-amber-700 to-amber-600',
+      trend: 'down',
+      bg: 'bg-amber-700/20',
+      border: 'border-amber-600/30'
     },
     { 
       label: 'Recent Uploads', 
       value: '23', 
       change: '+15', 
       icon: Upload, 
-      color: 'from-green-500 to-emerald-500',
-      trend: 'up'
+      color: 'from-emerald-700 to-emerald-600',
+      trend: 'up',
+      bg: 'bg-emerald-700/20',
+      border: 'border-emerald-600/30'
     },
-  ];
-
-  const earnings = [
-    { period: 'Today', amount: '₹12,450', icon: Calendar, color: 'text-blue-400' },
-    { period: 'This Month', amount: '₹3,45,890', icon: TrendingUp, color: 'text-purple-400' },
-    { period: 'This Year', amount: '₹42,67,340', icon: DollarSign, color: 'text-green-400' },
   ];
 
   const notifications = [
@@ -113,64 +115,53 @@ const DashboardOverview = () => {
         })}
       </div> */}
 
-      {/* Earnings Snapshot */}
-      {/* <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="glass-card p-6"
-      >
-        <h2 className="text-2xl font-bold mb-6 gradient-text">Earnings Snapshot</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {earnings.map((earning, index) => {
-            const Icon = earning.icon;
-            return (
-              <div key={earning.period} className="bg-white/5 rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
-                <div className="flex items-center gap-3 mb-3">
-                  <Icon size={24} className={earning.color} />
-                  <p className="text-gray-400">{earning.period}</p>
-                </div>
-                <h3 className="text-3xl font-bold">{earning.amount}</h3>
-              </div>
-            );
-          })}
-        </div>
-      </motion.div> */}
-
-      {/* Notifications and Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+{/* Notifications and Recent Activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Notifications Panel */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
-          className="glass-card p-6"
+          className="bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 shadow-xl hover:shadow-slate-700/10 transition-all"
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <AlertCircle className="text-orange-400" />
+            <h2 className="text-xl font-semibold text-slate-200 flex items-center gap-2">
+              <AlertCircle className="text-amber-400" size={20} />
               Notifications
             </h2>
             <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm font-semibold">
               {notifications.filter(n => n.priority === 'high').length} urgent
             </span>
           </div>
-          <div className="space-y-3 max-h-96 overflow-y-auto">
-            {notifications.map((notification) => (
-              <div
-                key={notification.id}
-                className={`p-4 rounded-xl border transition-all hover:scale-102 cursor-pointer ${
-                  notification.priority === 'high'
-                    ? 'bg-red-500/10 border-red-500/30'
-                    : notification.priority === 'medium'
-                    ? 'bg-orange-500/10 border-orange-500/30'
-                    : 'bg-green-500/10 border-green-500/30'
-                }`}
-              >
-                <p className="font-medium mb-1">{notification.message}</p>
-                <p className="text-xs text-gray-400">{notification.time}</p>
-              </div>
-            ))}
+          <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+            {notifications.map((notification) => {
+              const priorityColors = {
+                high: 'bg-red-500/10 border-red-500/20 hover:bg-red-500/15',
+                medium: 'bg-amber-500/10 border-amber-500/20 hover:bg-amber-500/15',
+                low: 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/40'
+              };
+              
+              const iconColors = {
+                high: 'text-red-400',
+                medium: 'text-amber-400',
+                low: 'text-slate-400'
+              };
+              
+              return (
+                <div
+                  key={notification.id}
+                  className={`p-4 rounded-xl border transition-all cursor-pointer ${priorityColors[notification.priority]}`}
+                >
+                  <div className="flex items-start gap-3">
+                    <AlertCircle size={18} className={`mt-0.5 flex-shrink-0 ${iconColors[notification.priority]}`} />
+                    <div>
+                      <p className="font-medium text-slate-100 mb-1">{notification.message}</p>
+                      <p className="text-xs text-slate-400">{notification.time}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -179,16 +170,32 @@ const DashboardOverview = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6 }}
-          className="glass-card p-6"
+          className="bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 shadow-xl hover:shadow-slate-700/10 transition-all"
         >
-          <h2 className="text-xl font-bold mb-6">Recent Activity</h2>
-          <div className="space-y-4 max-h-96 overflow-y-auto">
+          <h2 className="text-xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
+              <Activity className="text-blue-400" size={20} />
+              Recent Activity
+            </h2>
+          <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
             {recentActivity.map((activity, index) => (
-              <div key={index} className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
-                <div>
-                  <p className="font-semibold">{activity.driver}</p>
-                  <p className="text-sm text-gray-400">{activity.action}</p>
-                  <p className="text-xs text-gray-500">{activity.vehicle} • {activity.time}</p>
+              <div 
+                key={index} 
+                className="p-4 rounded-xl border border-slate-700/50 bg-slate-800/30 hover:bg-slate-700/30 transition-all"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-700/50 flex items-center justify-center">
+                    <User size={16} className="text-slate-300" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-slate-100">{activity.driver}</p>
+                    <p className="text-sm text-slate-300">{activity.action}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xs bg-slate-700/50 text-slate-300 px-2 py-0.5 rounded">
+                        {activity.vehicle}
+                      </span>
+                      <span className="text-xs text-slate-500">{activity.time}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

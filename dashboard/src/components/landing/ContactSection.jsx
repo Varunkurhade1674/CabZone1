@@ -48,10 +48,10 @@ const ContactSection = () => {
     {
       id: 'general',
       icon: <FaHeadset className="text-3xl" />,
-      title: 'General Inquiries',
-      description: 'Our support team is here to help you with any questions.',
+      title: 'Cab Service Support',
+      description: 'Our support team is here to assist with all your cab service needs.',
       bg: 'from-blue-500 to-blue-600',
-      image: '/images/contact-support.jpg'
+      image: 'https://images.unsplash.com/photo-1500829243541-74b677fecc30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
     }
   ];
 

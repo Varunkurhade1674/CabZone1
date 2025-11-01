@@ -78,8 +78,6 @@ function OwnerDashboard() {
   const [theme, setTheme] = useState('dark');
   const [showAI, setShowAI] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [toasts, setToasts] = useState([]);
   const [notificationCount, setNotificationCount] = useState(7);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -90,14 +88,7 @@ function OwnerDashboard() {
     window.location.href = '/dashboard/index.html';
   };
 
-  const addToast = (message, type = 'success') => {
-    const id = Date.now();
-    setToasts([...toasts, { id, message, type }]);
-  };
-
-  const removeToast = (id) => {
-    setToasts(toasts.filter(toast => toast.id !== id));
-  };
+  // Toast notifications have been removed as per request
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -147,115 +138,93 @@ function OwnerDashboard() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'light' ? 'bg-gray-100 text-gray-900' : theme === 'glass' ? 'bg-gradient-to-br from-blue-900/50 via-purple-900/50 to-pink-900/50' : ''}`}>
+    <div className={`min-h-screen ${theme === 'light' ? 'bg-slate-50 text-slate-800' : theme === 'glass' ? 'bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80' : 'bg-slate-900 text-slate-100'}`}>
       {/* Top Navigation Bar */}
-      <nav className="glass-card fixed top-0 left-0 right-0 z-50 mx-4 mt-4 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="glass-button p-2 lg:hidden"
-            >
-              {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-            <div className="flex items-center gap-3">
-              <img 
-                src="/images/logo.png" 
-                alt="CabZone Logo" 
-                className="h-12 w-auto filter brightness-0 invert drop-shadow-lg"
-              />
-              <div className="flex flex-col justify-center">
-                <h1 className="text-xl font-bold gradient-text leading-tight">CabZone</h1>
-                <p className="text-xs text-emerald-400/70 leading-tight">Fleet Management</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-xl mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search drivers, vehicles, documents..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="glass-input w-full pl-10 pr-4"
-              />
-            </div>
-          </div>
-
-          {/* Right Actions */}
-          <div className="flex items-center gap-3">
-            <button 
-              onClick={toggleTheme}
-              className="glass-button p-2 relative group"
-              title="Toggle Theme"
-            >
-              {theme === 'dark' ? <Moon size={20} /> : theme === 'light' ? <Sun size={20} /> : <Sparkles size={20} />}
-            </button>
-            
-            <button 
-              onClick={() => {
-                setNotificationCount(0);
-              }}
-              className="glass-button p-2 relative"
-              title="Notifications"
-            >
-              <Bell size={20} />
-              {notificationCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-rose-500 rounded-full text-xs flex items-center justify-center font-bold animate-pulse">
-                  {notificationCount}
-                </span>
-              )}
-            </button>
-
-            <button 
-              onClick={() => {
-                setShowAI(!showAI);
-              }}
-              className="glass-button px-4 py-2 flex items-center gap-2 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 hover:from-emerald-500/30 hover:to-cyan-500/30"
-            >
-              <Sparkles size={20} />
-              <span className="hidden sm:inline">AI Assistant</span>
-            </button>
-
-            <div className="relative">
-              <div
-                className="glass-card p-2 flex items-center gap-2 cursor-pointer hover:bg-white/5 transition-all border border-emerald-500/20"
-                onClick={() => setShowProfileMenu(!showProfileMenu)}
+      <nav className="fixed top-0 left-0 right-0 z-50 mx-4 mt-4">
+        <div className="glass-card p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 transition-colors lg:hidden"
               >
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-full flex items-center justify-center font-bold">
-                  {user?.name?.charAt(0) || 'O'}
-                </div>
-                <div className="hidden lg:block">
-                  <p className="text-sm font-semibold">{user?.name || 'Owner'}</p>
-                  <p className="text-xs text-gray-400">Fleet Owner</p>
-                </div>
-                <div className="text-emerald-400">
-                  <Settings size={16} />
-                </div>
+                {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="/images/logo.png" 
+                  alt="CabZone Logo" 
+                  className="h-10 w-auto filter brightness-0 invert drop-shadow-lg"
+                />
+                <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                  CABZONE
+                </span>
               </div>
-              {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-48 glass-card p-2 space-y-1 border border-emerald-500/30">
-                  <button
-                    onClick={() => {
-                      setShowProfileMenu(false);
-                    }}
-                    className="w-full text-left px-4 py-2 hover:bg-white/10 rounded-lg transition-colors flex items-center gap-2"
-                  >
-                    <Settings size={16} />
-                    Profile Settings
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 hover:bg-red-500/20 text-red-400 rounded-lg transition-colors flex items-center gap-2 font-semibold"
-                  >
-                    <LogOut size={16} />
-                    Logout
-                  </button>
-                </div>
-              )}
+            </div>
+
+            {/* Spacer to center the right-side icons */}
+            <div className="flex-1"></div>
+
+            {/* Right Actions */}
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={() => setShowAI(true)}
+                className="p-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:opacity-90 transition-all hover:shadow-lg hover:shadow-blue-500/20"
+                title="AI Assistant"
+              >
+                <Sparkles size={18} />
+              </button>
+              <button 
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 transition-colors border border-slate-600/50"
+                title="Toggle theme"
+              >
+                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+              </button>
+              <button 
+                className="p-2 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 relative transition-all border border-slate-600/50"
+                onClick={() => setNotificationCount(0)}
+              >
+                <Bell size={18} />
+                {notificationCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center border border-slate-800">
+                    {notificationCount > 9 ? '9+' : notificationCount}
+                  </span>
+                )}
+              </button>
+
+              <div className="relative">
+                <button 
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="flex items-center space-x-2 focus:outline-none group"
+                >
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white font-medium shadow-md">
+                    {user?.username?.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="hidden md:flex flex-col items-start">
+                    <span className="text-sm font-medium text-slate-200">{user?.username}</span>
+                    <span className="text-xs text-slate-400">Owner</span>
+                  </div>
+                  <svg className="w-4 h-4 text-slate-400 group-hover:text-slate-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {showProfileMenu && (
+                  <div className="absolute right-0 mt-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700/50 py-1.5 z-50 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-slate-700/50">
+                      <p className="text-sm font-medium text-slate-200">{user?.username}</p>
+                      <p className="text-xs text-slate-400">{user?.email || 'No email provided'}</p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:bg-slate-700/50 flex items-center space-x-3 transition-colors"
+                    >
+                      <LogOut size={16} className="text-slate-400" />
+                      <span>Sign out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -264,44 +233,54 @@ function OwnerDashboard() {
       {/* Main Layout */}
       <div className="flex pt-24 px-4 pb-4 gap-4">
         {/* Sidebar */}
-        <aside className={`glass-card p-4 transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-0 overflow-hidden lg:w-20'} fixed lg:sticky top-24 h-[calc(100vh-7rem)] overflow-y-auto z-40`}>
-          <nav className="space-y-2">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              return (
+        <aside className={`p-4 transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-0 overflow-hidden lg:w-20'} fixed lg:sticky top-24 h-[calc(100vh-7rem)] overflow-y-auto z-40`}>
+          <div className="bg-slate-800/80 backdrop-blur-sm rounded-xl h-full p-4 border border-slate-700/50">
+            <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-1">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                    }}
+                    className={`w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+                      activeTab === item.id
+                        ? 'bg-gradient-to-r from-blue-600/80 to-indigo-600/80 text-white shadow-md shadow-blue-500/20'
+                        : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                    }`}
+                  >
+                    <Icon 
+                      className={`mr-3 ${activeTab === item.id ? 'text-white' : 'text-slate-400'}`} 
+                      size={18} 
+                    />
+                    <span>{item.label}</span>
+                    {item.id === 'drivers' && (
+                      <span className="ml-auto px-2 py-0.5 text-xs font-medium rounded-full bg-blue-500/20 text-blue-300">
+                        New
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+              {/* Logout Button */}
+              <div className="pt-4 mt-4 border-t border-emerald-500/20">
                 <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
-                    activeTab === item.id
-                      ? 'bg-gradient-to-r from-emerald-500/30 to-cyan-500/30 border border-emerald-500/50 shadow-lg shadow-emerald-500/20'
-                      : 'hover:bg-white/5 hover:border hover:border-emerald-500/20'
-                  }`}
+                  onClick={handleLogout}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 hover:bg-red-500/20 hover:border hover:border-red-500/50 text-red-400 ${sidebarOpen ? 'justify-start' : 'justify-center'}`}
                 >
-                  <Icon size={20} />
+                  <LogOut size={20} />
                   <span className={`${sidebarOpen ? 'block' : 'hidden lg:hidden'} font-medium`}>
-                    {item.label}
+                    Logout
                   </span>
                 </button>
-              );
-            })}
-            {/* Logout Button */}
-            <div className="pt-4 mt-4 border-t border-emerald-500/20">
-              <button
-                onClick={handleLogout}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 hover:bg-red-500/20 hover:border hover:border-red-500/50 text-red-400 ${sidebarOpen ? 'justify-start' : 'justify-center'}`}
-              >
-                <LogOut size={20} />
-                <span className={`${sidebarOpen ? 'block' : 'hidden lg:hidden'} font-medium`}>
-                  Logout
-                </span>
-              </button>
-            </div>
-          </nav>
+              </div>
+            </nav>
+          </div>
         </aside>
 
         {/* Main Content */}
-        <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-0 lg:ml-0' : 'ml-0'}`}>
+        <main className="flex-1 ml-0 lg:ml-4 transition-all duration-300">
           {renderContent()}
         </main>
       </div>
@@ -309,8 +288,7 @@ function OwnerDashboard() {
       {/* AI Assistant Panel */}
       {showAI && <AIAssistant onClose={() => setShowAI(false)} />}
 
-      {/* Toast Notifications */}
-      <ToastContainer toasts={toasts} removeToast={removeToast} />
+      {/* Toast Notifications have been removed as per request */}
     </div>
   );
 }
