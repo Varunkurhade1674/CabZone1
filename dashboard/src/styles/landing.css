@@ -243,7 +243,7 @@ body {
     padding-top: 120px;
     padding-bottom: 80px;
     position: relative;
-    background-color: #000;
+    background-color: #1a1a2e;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -315,8 +315,7 @@ body {
     max-width: 600px;
     height: auto;
     filter: drop-shadow(0 20px 40px rgba(67, 97, 238, 0.6)) drop-shadow(0 0 20px rgba(247, 37, 133, 0.4));
-    animation: float 4s ease-in-out infinite, fadeInUp 1.5s ease-out;
-    animation-delay: 0s, 0.3s;
+    animation: fadeInUp 1.5s ease-out;
     transition: all 0.4s ease;
 }
 
